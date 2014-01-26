@@ -6,28 +6,25 @@ class Comment
   field :abusive, type: Boolean, default: false
 	belongs_to :user
 	belongs_to :post
-	has_many :votes, after_add: :abusive_comment
+	has_many :votes, after_add: :abusive_comment, dependent: :destroy
 	scope :bad_votes, ->{ where(value: -1)} 
 
 	def unlock_abusive_state
-		self.abusive = false
-
+		update_attribute :abusive, false
 	end
 
-	def display_for_post_author
-		
+	def negative_value_counter
+		self.votes.where(value: -1).count
 	end
-
-	def positive_value? (value)
-		value > 0
+	
+	def positive_value_counter
+		self.votes.where(value: 1).count
 	end
 
 	private
 		def abusive_comment(vote)
-			 if vote.value - self.votes.where("value = -1 ").count  == -3 
-			 	update_attribute 'abusive', true 
+			 if vote.value - negative_value_counter  == -3 
+			 	update_attribute :abusive, true 
 			 end
 		end
-
-
 end
