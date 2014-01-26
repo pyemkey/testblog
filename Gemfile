@@ -13,7 +13,7 @@ gem 'draper'
 gem 'decent_exposure'
 gem 'decent_decoration'
 gem 'flatui-rails', github: 'pkurek/flatui-rails'
-
+gem 'faker'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'

@@ -83,6 +83,8 @@ GEM
     factory_girl_rails (4.3.0)
       factory_girl (~> 4.3.0)
       railties (>= 3.0.0)
+    faker (1.2.0)
+      i18n (~> 0.5)
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
@@ -231,6 +233,7 @@ DEPENDENCIES
   draper
   email_spec
   factory_girl_rails
+  faker
   figaro
   flatui-rails!
   haml-rails
