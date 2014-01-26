@@ -6,7 +6,7 @@ class Post
   field :body, type: String
   field :title, type: String
   field :archived, type: Boolean, default: false
-  has_many :comments
+  has_many :comments, dependent: :destroy
   belongs_to :user
 
   validates_presence_of :body, :title
@@ -14,8 +14,6 @@ class Post
   belongs_to :user
 
   default_scope ->{ ne(archived: true) }
-
-
 
   def archive!
     update_attribute :archived, true
@@ -36,10 +34,9 @@ class Post
       hot
     end
   end
-
-  def hotness?
-   self.comments.count >= 3
-  end
-
-
+  
+  private
+    def hotness?
+     self.comments.count >= 3
+    end
 end
