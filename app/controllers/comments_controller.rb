@@ -1,18 +1,38 @@
 class CommentsController < ApplicationController
 
+	def create
+		@comment = Comment.new(comment_params)
+		@comment.post_id = params[:post_id]
+		@comment.save
+		current_user.comments << @comment
+		redirect_to @comment.post
+	end
+
 	def mark_as_not_abusive
-		@post = Post.find(params[:post_id])
 		@comment = Comment.find(params[:id])
-		@comment.update_attributes(abusive: false)
-		redirect_to @post
+		@comment.unlock_abusive_state
+		redirect_to @comment.post
 	end
 
 	def vote_up
-		@post = current_user.posts.find(params[:post_id])
-		@comment = @post.comments.find(params[:id])
-		if @comment.votes.empty?
-			@comment.votes.create(value: 1).save
-		end
-		redirect_to @post
+		vote 1
 	end
+
+	def vote_down
+		vote -1
+	end
+
+	private
+		def vote(value)
+			@comment = Comment.find(params[:id])
+			unless @comment.votes.map(&:user).include? current_user
+				vote = Vote.create(user: current_user, value: -1)
+			 	@comment.votes << vote
+			end
+			redirect_to @comment.post
+		end
+
+		def comment_params
+			params.require(:comment).permit(:post_id,:user_id,:body)
+		end
 end
