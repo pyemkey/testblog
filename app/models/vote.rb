@@ -3,5 +3,4 @@ class Vote
 	field :value, type: Integer
 	belongs_to :user
 	belongs_to :comment
-	
 end
