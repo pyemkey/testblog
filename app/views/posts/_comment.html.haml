@@ -1,0 +1,13 @@
+/.comment-list
+%div{class: "comment-list #{"abusive" if comment.abusive}"}
+  %p.author
+    #{comment.user.email}
+    %span.time_ago= time_ago_in_words comment.created_at
+  %p= comment.body
+  .vote-box
+    %p.vote_counter= comment.positive_value_counter
+    = button_to "Vote up", vote_up_post_comment_path(post,comment), method: :post
+    %p.vote_counter= comment.negative_value_counter
+    = button_to "Vote down", vote_down_post_comment_path(post,comment), method: :post
+    - if comment.abusive
+      = button_to "Unlock", mark_as_not_abusive_post_comment_path(post,comment)
