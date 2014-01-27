@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
 		def vote(value)
 			@comment = Comment.find(params[:id])
 			unless @comment.votes.map(&:user).include? current_user
-				vote = Vote.create(user: current_user, value: -1)
+				vote = Vote.create(user: current_user, value: value)
 			 	@comment.votes << vote
 			end
 			redirect_to @comment.post
