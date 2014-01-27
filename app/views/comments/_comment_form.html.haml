@@ -1,0 +1,4 @@
+.comment-form
+  =simple_form_for [post,@comment] do |f|
+    = f.input :body, as: :text, label: "Add comment", input_html: {cols: 50, rows: 3, class: "comment-text"}
+    = f.submit "Post", class: "btn btn-primary btn-comment"
