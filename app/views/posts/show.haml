@@ -2,11 +2,19 @@
   %h2
     = post.title
     %small
-      = post.created_at
-  = link_to "edit", edit_post_path(post), class: 'post__button--edit'
+      = post.friendly_date
+  - if current_user.owner? post
+    = link_to "edit", edit_post_path(post), class: 'post__button--edit' 
+    = link_to "delete", post, class: 'post__button--edit', method: :delete,confirm: "Are you sure?"
+    = link_to "archive", mark_archived_post_path(post),method: :post, class: 'post__button--edit', confirm: "Are you sure?"
 
-  .post__body
+  .post__body.main-post
     = post.body
   .post__tags-list.tagsinput
     - post.tags_array.each do |tag|
       = content_tag :span, tag, class: 'tag'
+  =render partial: 'comments/comment_form'
+  =render partial: 'posts/comment', collection: @comments
+  
+
+  

@@ -9,5 +9,8 @@
 %ol
   - posts.each do |post|
     %li.post--short-size
-      .post__title= link_to post.title, post_path(post)
+      .post__title
+        = link_to post.title, post_path(post)
+        = "Popularity: #{post.hotness}" 
       .post__body= post.truncated_body
+
