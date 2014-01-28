@@ -14,6 +14,8 @@ class Post
   belongs_to :user
 
   default_scope ->{ ne(archived: true) }
+  default_scope ->{ order("created_at ASC")}
+
 
   def archive!
     update_attribute :archived, true
