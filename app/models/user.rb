@@ -41,6 +41,9 @@ class User
   def owner? post
     posts.include? post
   end
+  def add_comment comment 
+    comments << comment
+  end
 
   def to_s
     nickname.present? ? nickname : name

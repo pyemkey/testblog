@@ -21,6 +21,14 @@ class Comment
 		self.votes.where(value: 1).count
 	end
 
+	def add_vote vote
+		votes << vote
+	end
+
+	def contain_user_vote? user
+		votes.map(&:user).include? user
+	end
+
 	private
 		def abusive_comment(vote)
 			 if vote.value - negative_value_counter  == -3 
