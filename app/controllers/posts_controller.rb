@@ -23,7 +23,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    post.destroy if current_user.owner? post
+    post.destroy if isOwner?
     render action: :index
   end
 
@@ -54,7 +54,7 @@ class PostsController < ApplicationController
   end
 
   def comments
-    @comment = isOwner? ? post.comments : post.comments.where(abusive: false)
+    comment = isOwner? ? post.comments : post.comments.where(abusive: false)
   end
 
   private
